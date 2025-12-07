@@ -125,8 +125,6 @@ class Board {
                     for (int k = j + 1; k < N - 1; ++k) grid[i][k] = grid[i][k + 1];
                     grid[i][N - 1] = 0;
                     grid[i][j] *= 2;
-                    --j;
-                    if (j >= 0) --j;
                 }
             }
         }
