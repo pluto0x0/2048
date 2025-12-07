@@ -37,9 +37,9 @@ class Board {
             for (int j = 0; j < N; ++j) {
                 std::cout << "|";
                 std::cout.width(4);
-                if (grid[i][j] != 0) {
+                if (grid[i][j] != 0)
                     std::cout << grid[i][j];
-                } else
+                else
                     std::cout << " ";
             }
             std::cout << "|" << std::endl;
