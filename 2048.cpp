@@ -78,11 +78,26 @@ class Board {
         rotateCCW(1);
         print();
     }
-    bool won() {
+    signed won() {
+        signed ret = -1;
         for (int i = 0; i < N; ++i)
-            for (int j = 0; j < N; ++j)
-                if (grid[i][j] >= WIN_NUM) return true;
-        return false;
+            for (int j = 0; j < N; ++j) {
+                if (grid[i][j] >= WIN_NUM) return 1;
+                if (grid[i][j] == 0) ret = 0;
+            }
+        if (ret == -1) {
+            int tmp[N][N];
+            memcpy(tmp, grid, sizeof(grid));
+            for (int t = 0; t < 4; ++t) {
+                if (leftShift()) {
+                    ret = 0;
+                    break;
+                }
+                rotateCCW(1);
+            }
+            memcpy(grid, tmp, sizeof(grid));
+        }
+        return ret;
     }
 
    private:
@@ -94,7 +109,7 @@ class Board {
                 for (int j = 0; j < N; ++j) grid[N - j - 1][i] = tmp[i][j];
         }
     }
-    void leftShift() {
+    bool leftShift() {
         bool moved = false;
         for (int i = 0; i < N; ++i) {
             int head = 0;
@@ -118,6 +133,7 @@ class Board {
             }
         }
         if (moved && dis(gen) < probnew) addRandomNum();
+        return moved;
     }
 };
 
@@ -146,8 +162,10 @@ int main() {
                     default:
                         continue;
                 }
-                if (board.won()) {
-                    std::cout << "You win!" << std::endl;
+                signed status = board.won();
+                if (status != 0) {
+                    std::cout << "You " << (status == 1 ? "Win" : "Lose") << "!"
+                              << std::endl;
                     break;
                 }
                 std::cout << "Press ESC to exit." << std::endl;
