@@ -1,11 +1,9 @@
 #include <conio.h>
 
-#include <cassert>
 #include <chrono>
 #include <cstring>
 #include <iostream>
 #include <random>
-#include <vector>
 
 #define N 4           // 棋盘大小
 #define WIN_NUM 2048  // 获胜数字
